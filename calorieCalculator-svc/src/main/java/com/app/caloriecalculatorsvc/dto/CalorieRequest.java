@@ -12,7 +12,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CalorieRequest {
 
-
     @NotNull
     private UUID userId;
 
@@ -25,6 +24,8 @@ public class CalorieRequest {
     @NotNull
     private int age;
 
+    private double calories;
+
     @NotNull
     private String gender;
 
@@ -33,3 +34,4 @@ public class CalorieRequest {
     private String activityLevel;
 
 }
+
