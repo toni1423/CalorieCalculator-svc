@@ -1,4 +1,6 @@
 package com.app.caloriecalculatorsvc.controller;
+
+import com.app.caloriecalculatorsvc.dto.CalorieCalculation;
 import com.app.caloriecalculatorsvc.dto.CalorieRequest;
 import com.app.caloriecalculatorsvc.model.CalorieRecord;
 import com.app.caloriecalculatorsvc.service.CalorieCalculatorService;
@@ -17,29 +19,23 @@ public class CalorieController {
         this.service = service;
     }
 
-    // POST: Изчисляване и запазване
     @PostMapping("/calculate")
     public ResponseEntity<CalorieRecord> calculateAndSave(@RequestBody CalorieRequest request) {
         CalorieRecord savedRecord = service.calculateAndSave(request);
-        return ResponseEntity.ok(savedRecord); // status 200 OK
+        return ResponseEntity.ok(savedRecord);
     }
 
-    // GET: Извличане на всички записи
-    @GetMapping("/records")
-    public ResponseEntity<List<CalorieRecord>> getAllRecords() {
-        List<CalorieRecord> records = service.getAllRecords();
+    @GetMapping("/records/user/{userId}")
+    public ResponseEntity<List<CalorieCalculation>> getRecordsByUser(@PathVariable UUID userId) {
+        List<CalorieCalculation> records = service.getRecordsByUserId(userId);
         if (records.isEmpty()) {
-            return ResponseEntity.noContent().build(); // status 204 No Content
+            return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(records); // status 200 OK
+        return ResponseEntity.ok(records);
     }
 
-    // GET: Единичен запис по ID (опционално)
-    @GetMapping("/records/{id}")
-    public ResponseEntity<CalorieRecord> getRecordById(@PathVariable UUID id) {
-        return service.getRecordById(id)
-                .map(ResponseEntity::ok)              // status 200 OK
-                .orElse(ResponseEntity.notFound().build()); // status 404 Not Found
+    @GetMapping("/calories/user/{userId}/history")
+    public List<CalorieCalculation> getHistoryByUserId(@PathVariable UUID userId) {
+        return service.getHistoryByUserId(userId);
     }
-
 }
