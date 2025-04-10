@@ -57,10 +57,10 @@ public class CalorieCalculatorServiceTest {
 
         when(repository.save(any(CalorieRecord.class))).thenReturn(savedRecord);
 
-        // Act
+        
         CalorieRecord result = service.calculateAndSave(request);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(expectedCalories, result.getCalories());
         verify(repository, times(1)).save(any(CalorieRecord.class)); // Verify if save is called
@@ -68,10 +68,10 @@ public class CalorieCalculatorServiceTest {
 
     @Test
     void testGetRecordsByUserId_ShouldReturnRecords() {
-        // Arrange
+        
         UUID userId = UUID.randomUUID();
 
-        // Използване на Builder с проверки
+        
         List<CalorieCalculation> records = List.of(
                 CalorieCalculation.builder()
                         .userId(userId)
@@ -93,13 +93,13 @@ public class CalorieCalculatorServiceTest {
                         .build()
         );
 
-        // Мокиране на repository
+        
         when(repository.findByUserId(userId)).thenReturn(records);
 
-        // Act
+        
         List<CalorieCalculation> result = service.getRecordsByUserId(userId);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
         verify(repository, times(1)).findByUserId(userId); // Verify repository method was called
