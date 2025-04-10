@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -32,7 +31,7 @@ public class CalorieCalculatorService {
 
         double calories = bmr * multiplier;
 
-        // Запазване в базата
+
         CalorieRecord record = new CalorieRecord();
         record.setUserId(request.getUserId());
         record.setAge(request.getAge());
@@ -51,10 +50,10 @@ public class CalorieCalculatorService {
 
 
     public List<CalorieCalculation> getHistoryByUserId(UUID userId) {
-        // Извличаме всички калорийни записи за потребителя
+
         List<CalorieCalculation> calorieCalculations = repository.findByUserId(userId);
 
-        // Преобразуваме в DTO
+
         return calorieCalculations.stream()
                 .map(calorieCalculation -> CalorieCalculation.builder()
                         .userId(calorieCalculation.getUserId())
